@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>customer</module>
+    </modules>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -20,8 +26,8 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring.boot.maven.plugin.version>2.7.5</spring.boot.maven.plugin.version>
-        <spring.boot.dependencies.version>2.7.5</spring.boot.dependencies.version>
+        <spring.boot.maven.plugin.version>3.0.1</spring.boot.maven.plugin.version>
+        <spring-boot.version>3.0.1</spring-boot.version>
     </properties>
 
     <dependencyManagement>
@@ -29,7 +35,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring.boot.dependencies.version}</version>
+                <version>${spring-boot.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
