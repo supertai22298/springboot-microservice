@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
  * @date 1/1/2023
  */
 @Service
-public record CustomerService() {
+public record CustomerService(CustomerRepository customerRepository) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -17,6 +17,8 @@ public record CustomerService() {
 
         // TODO: Check if email valid
         // TODO: Check if email exist
-        // TODO: Store customer in DB
+
+        // Store customer in DB
+        customerRepository.save(customer);
     }
 }
