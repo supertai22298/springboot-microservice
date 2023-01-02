@@ -8,7 +8,10 @@ import org.springframework.web.client.RestTemplate;
  * @date 1/1/2023
  */
 @Service
-public record CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate) {
+public record CustomerService(
+        CustomerRepository customerRepository,
+        RestTemplate restTemplate,
+        FraudClient fraudClient) {
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -22,11 +25,14 @@ public record CustomerService(CustomerRepository customerRepository, RestTemplat
         // Store customer in DB
         customerRepository.saveAndFlush(customer);
 
-        // TODO: Check if fraudster
-        FraudCheckResponse response = restTemplate.getForObject(
-                "http://localhost:8081/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId());
+        // Check if fraudster using restTemplate
+//        FraudCheckResponse response = restTemplate.getForObject(
+//                "http://localhost:8081/api/v1/fraud-check/{customerId}",
+//                FraudCheckResponse.class,
+//                customer.getId());
+
+        // Check if fraudster using feign client
+        FraudCheckResponse response = fraudClient.checkFraud(customer.getId());
 
         if (response.isFraudster()) {
             throw new IllegalStateException("fraudster");
