@@ -1,0 +1,16 @@
+server:
+  port: 8083
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/supertai22298/microservice-configserver.git
+#          Authenticate github repo is not available now
+#          Temporarily, using public repo instead
+#          username: supertai22298
+#          password: XXXXXXXX
+#          default-label: main
+#          search-paths: '{application}'
+#          skip-ssl-validation: true
