@@ -1,8 +1,11 @@
 package com.taivn.customer;
 
+import com.taivn.customer.messagekafka.MessageProducer;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +20,13 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
-    @Value("${title}") // This get from config server
-    String title;
+    @Autowired
+    private MessageProducer messageProducer;
+
+//    @Value("${title}") // This get from config server
+    String title = "title";
 
     @PostMapping
     public String registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest) {
@@ -34,4 +40,11 @@ public class CustomerController {
     public List<Customer> getTitle() {
         return customerService.findAll();
     }
+
+    @GetMapping("/messages/{message}")
+    public String sendKafkaMessage(@PathVariable("message") String message) {
+        messageProducer.sendMessage(message);
+        return "SEND MESSAGE SUCCESSFUL";
+    }
+
 }

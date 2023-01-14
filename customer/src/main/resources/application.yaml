@@ -15,7 +15,12 @@ spring:
     hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
       ddl-auto: update
-      format_sql: true
+      format_sql:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 eureka:
   client:
     serviceUrl:
@@ -52,3 +57,10 @@ resilience4j.circuitbreaker:
       slowCallRateThreshold: 50
       slowCallDurationThreshold: 10
       failureRateThreshold: 50
+
+# Configuration for Kafka
+customer:
+  kafka:
+    topic: CUSTOMER-MESSAGE-TOPIC
+
+
